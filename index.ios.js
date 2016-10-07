@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import { text } from 'react-native-communications'
+import ChooseNumbers from './ChooseNumbers'
 
 class SendingOutAnSMS extends Component {
   constructor() {
@@ -57,6 +58,7 @@ class SendingOutAnSMS extends Component {
         <TouchableHighlight style={styles.button} onPress={() => this._onPressButton(link)}>
           <Text style={styles.instructions}>SEND</Text>
         </TouchableHighlight>
+        <ChooseNumbers/>
       </View>
     );
   }
