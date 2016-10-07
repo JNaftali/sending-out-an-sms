@@ -4,13 +4,15 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native'
+
+import { text } from 'react-native-communications'
 
 class SendingOutAnSMS extends Component {
   constructor() {
@@ -29,6 +31,8 @@ class SendingOutAnSMS extends Component {
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     )
+
+    text('7324257681', 'omg it worked')
   }
 
   render() {
