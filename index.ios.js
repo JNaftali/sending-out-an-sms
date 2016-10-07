@@ -9,7 +9,8 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native'
 
 import { text } from 'react-native-communications'
@@ -18,43 +19,43 @@ class SendingOutAnSMS extends Component {
   constructor() {
     super()
     this.state = {
-      myPosition: 'unknown'
+      myPosition: 'unknown',
+      lat: 'unknown',
+      long: 'unknown'
     }
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       (position) => {
         let myPosition = JSON.stringify(position);
-        this.setState({myPosition});
+        let cords = position.coords;
+        let lat = cords.latitude;
+        let long = cords.longitude;
+        this.setState({myPosition, lat, long});
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     )
   }
 
-  _onPressButton() {
-  text('7324257681', 'omg it worked');
+  _onPressButton(link) {
+  text('7324257681', link);
 }
 
   render() {
+    let link = `http://maps.google.com/maps?z=17%26t=m%26q=loc:${this.state.lat}+${this.state.long}`
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Find Me
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.ios.js
+          Click the button to text your contact a Google map with your current location.{'\n'}
+
         </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-        <Text style={styles.instructions}>
-          {this.state.myPosition}
-        </Text>
-        <TouchableHighlight style={styles.button} onPress={this._onPressButton}>
-          <Text style={styles.instructions}>Find Me</Text>
+        <TouchableHighlight style={styles.button} onPress={() => this._onPressButton(link)}>
+          <Text style={styles.instructions}>SEND</Text>
         </TouchableHighlight>
       </View>
     );
@@ -69,21 +70,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 50,
     textAlign: 'center',
     margin: 10,
   },
   instructions: {
+    fontSize: 20,
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-  textAlign: 'center',
-  color: '#ffffff',
-  marginBottom: 7,
-  border: '1px solid blue',
-  borderRadius: 2,
+    backgroundColor: '#00bfff',
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 15,
+    borderWidth: 4,
+    borderColor: '#000000',
+    borderStyle: 'solid',
+    borderRadius: 15,
 }
 });
 
