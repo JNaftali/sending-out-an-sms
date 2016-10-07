@@ -55,8 +55,8 @@ class SendingOutAnSMS extends Component {
   _onPressButton(link) {
   const nums = this.state.numbers.reduce((string, contact) => {return string + contact.phoneNumbers[0].number + ', '}, '')
 
-  Linking.openURL(`sms:1234567890,7324257681,3012521180&body=${link}`)
-  // text(nums, link)
+  // Linking.openURL(`sms:1234567890,7324257681,3012521180&body=${link}`)
+  text(this.state.numbers[this.state.numbers.length-1].phoneNumbers[0].number, link)
 }
 
   addNumber(number) {
