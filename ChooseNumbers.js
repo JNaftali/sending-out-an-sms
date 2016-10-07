@@ -12,22 +12,12 @@ class ChooseNumbers extends Component {
   constructor() {
     super()
     this.state = {
-      text: '',
-      numbers: [
-        {
-          givenName: 'Josh Marantz',
-          phoneNumbers: [
-            {
-              number: '7324257681'
-            }
-          ]
-        }
-      ]
+      text: ''
     }
   }
 
   listNumbers() {
-    return this.state.numbers.map((contact)=>{
+    return this.props.numbers.map((contact)=>{
       return <Text key={contact.recordID || Math.floor(Math.random() * 1000)}>{contact.givenName || contact.phoneNumbers[0].number}</Text>
     })
   }
@@ -42,13 +32,9 @@ class ChooseNumbers extends Component {
         />
         <TouchableOpacity style={{height: 30, width: 70, backgroundColor: "blue"}}
         onPress={()=> {
+          this.props.handlePress(this.state.text)
           this.setState({
-            text: '',
-            numbers: this.state.numbers.concat([{
-              phoneNumbers: [{
-                number: this.state.text
-              }]
-            }])
+            text: ''
           })
         }}>
           <Text>Push me</Text>
