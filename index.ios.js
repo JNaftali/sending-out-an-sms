@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import { text } from 'react-native-communications'
+import ChooseNumbers from './ChooseNumbers'
 
 class SendingOutAnSMS extends Component {
   constructor() {
@@ -21,8 +22,19 @@ class SendingOutAnSMS extends Component {
     this.state = {
       myPosition: 'unknown',
       lat: 'unknown',
-      long: 'unknown'
+      long: 'unknown',
+      numbers: [
+        {
+          givenName: 'Josh Marantz',
+          phoneNumbers: [
+            {
+              number: '7324257681'
+            }
+          ]
+        }
+      ]
     }
+    this.addNumber = this.addNumber.bind(this)
   }
 
   componentDidMount() {
@@ -40,8 +52,18 @@ class SendingOutAnSMS extends Component {
   }
 
   _onPressButton(link) {
-  text('7324257681', link);
+  this.state.numbers.forEach((contact) => text(contact.phoneNumbers[0].number, link))
 }
+
+  addNumber(number) {
+    this.setState({
+      numbers: this.state.numbers.concat([{
+        phoneNumbers: [{
+          number: number
+        }]
+      }])
+    })
+  }
 
   render() {
     let link = `http://maps.google.com/maps?z=17%26t=m%26q=loc:${this.state.lat}+${this.state.long}`
@@ -57,6 +79,7 @@ class SendingOutAnSMS extends Component {
         <TouchableHighlight style={styles.button} onPress={() => this._onPressButton(link)}>
           <Text style={styles.instructions}>SEND</Text>
         </TouchableHighlight>
+        <ChooseNumbers numbers={this.state.numbers} handlePress={this.addNumber}/>
       </View>
     );
   }
