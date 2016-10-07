@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Linking
 } from 'react-native'
 
 import { text } from 'react-native-communications'
@@ -52,7 +53,10 @@ class SendingOutAnSMS extends Component {
   }
 
   _onPressButton(link) {
-  this.state.numbers.forEach((contact) => text(contact.phoneNumbers[0].number, link))
+  const nums = this.state.numbers.reduce((string, contact) => {return string + contact.phoneNumbers[0].number + ', '}, '')
+
+  Linking.openURL(`sms:1234567890,7324257681,3012521180&body=${link}`)
+  // text(nums, link)
 }
 
   addNumber(number) {
