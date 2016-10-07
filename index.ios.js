@@ -31,9 +31,11 @@ class SendingOutAnSMS extends Component {
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     )
-
-    text('7324257681', 'omg it worked')
   }
+
+  _onPressButton() {
+  text('7324257681', 'omg it worked');
+}
 
   render() {
     return (
@@ -51,6 +53,9 @@ class SendingOutAnSMS extends Component {
         <Text style={styles.instructions}>
           {this.state.myPosition}
         </Text>
+        <TouchableHighlight style={styles.button} onPress={this._onPressButton}>
+          <Text style={styles.instructions}>Find Me</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -73,6 +78,13 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  button: {
+  textAlign: 'center',
+  color: '#ffffff',
+  marginBottom: 7,
+  border: '1px solid blue',
+  borderRadius: 2,
+}
 });
 
 AppRegistry.registerComponent('SendingOutAnSMS', () => SendingOutAnSMS);
